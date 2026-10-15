@@ -1,0 +1,233 @@
+[
+ {
+  "shot": 0,
+  "cut": 29.4,
+  "target": [
+   1388.1825875123043,
+   887.3846827674749
+  ],
+  "pocket": [
+   1591.123553936298,
+   986.9817970275878
+  ],
+  "status": "ok (locked)",
+  "pred_pot": null,
+  "pred_obj_ball": [
+   1388.4574397611043,
+   890.6344421092202
+  ],
+  "pred_obj_dir": 29.833525027808694,
+  "pred_cue_after": 90.04248452524551,
+  "hint": true,
+  "pred_obj_path": [
+   [
+    1388.4574397611043,
+    890.6344421092202
+   ],
+   [
+    1501.3575170349548,
+    955.3806829934855
+   ],
+   [
+    1559.3806829934854,
+    934.0845026783913
+   ],
+   [
+    580.3360005038674,
+    372.6193170065146
+   ],
+   [
+    361.6193170065146,
+    452.89466656272396
+   ],
+   [
+    672.9959042764696,
+    631.4637518273839
+   ]
+  ],
+  "pred_cue_after_path": [
+   [
+    1356.8054744841606,
+    873.5610381537854
+   ],
+   [
+    1356.780645343921,
+    907.0462819156128
+   ]
+  ],
+  "pred_scratch": false,
+  "obj_dir_actual": 30.235780317738993,
+  "obj_moved": true,
+  "obj_on_table_end": true,
+  "obj_last_pocket_dist": 193.96412409741598,
+  "actual_pot": false,
+  "cue_after_actual": 105.74082100457171,
+  "cue_on_table_end": true,
+  "err_obj_dir": 0.40225528993030935,
+  "err_cue_after": 15.698336479326201
+ },
+ {
+  "shot": 1,
+  "cut": 1.8,
+  "target": [
+   1160.0349362312302,
+   892.29890209371
+  ],
+  "pocket": [
+   966.5910179363906,
+   992.8425890655886
+  ],
+  "status": "ok (locked)",
+  "pred_pot": null,
+  "pred_obj_ball": [
+   1160.6569238454208,
+   892.0982633874283
+  ],
+  "pred_obj_dir": 150.7163491837983,
+  "pred_cue_after": 162.97966083415494,
+  "hint": true,
+  "pred_obj_path": [
+   [
+    1160.6569238454208,
+    892.0982633874283
+   ],
+   [
+    1047.0360797649687,
+    955.8166828169376
+   ],
+   [
+    906.2065674654823,
+    905.2713998326399
+   ]
+  ],
+  "pred_cue_after_path": [
+   [
+    1194.448994527409,
+    878.2612385961658
+   ],
+   [
+    941.0982645744922,
+    955.8166828169376
+   ],
+   [
+    884.194755471835,
+    944.6683698309108
+   ]
+  ],
+  "pred_scratch": false,
+  "obj_dir_actual": null,
+  "obj_moved": true,
+  "obj_on_table_end": true,
+  "obj_last_pocket_dist": 217.95742430301453,
+  "actual_pot": false,
+  "cue_after_actual": null,
+  "cue_on_table_end": false,
+  "err_obj_dir": null,
+  "err_cue_after": null
+ },
+ {
+  "shot": 2,
+  "cut": 2.1,
+  "target": [
+   900.5514449302594,
+   738.8176935653304
+  ],
+  "pocket": [
+   960.5000000000001,
+   339.73345958018245
+  ],
+  "status": "ok (locked)",
+  "pred_pot": [
+   958.4706730769232,
+   339.52653613908575
+  ],
+  "pred_obj_ball": [
+   900.9162069141463,
+   738.3696089054781
+  ],
+  "pred_obj_dir": -81.78869930049738,
+  "pred_cue_after": -81.70304033040219,
+  "hint": true,
+  "pred_obj_path": [
+   [
+    900.9162069141463,
+    738.3696089054781
+   ],
+   [
+    958.4706730769232,
+    339.52653613908575
+   ]
+  ],
+  "pred_cue_after_path": [
+   [
+    895.2077226739041,
+    773.3394497460846
+   ],
+   [
+    958.4706730769232,
+    339.52653613908575
+   ]
+  ],
+  "pred_scratch": true,
+  "obj_dir_actual": null,
+  "obj_moved": false,
+  "obj_on_table_end": false,
+  "obj_last_pocket_dist": 253.06460430043774,
+  "actual_pot": false,
+  "cue_after_actual": null,
+  "cue_on_table_end": false,
+  "err_obj_dir": null,
+  "err_cue_after": null
+ },
+ {
+  "shot": 4,
+  "cut": 4.2,
+  "target": [
+   1540.3807554478985,
+   820.272781335544
+  ],
+  "pocket": [
+   1606.429408812012,
+   995.0920564819428
+  ],
+  "status": "ok (locked)",
+  "pred_pot": null,
+  "pred_obj_ball": [
+   1365.8483204389845,
+   641.0467932430553
+  ],
+  "pred_obj_dir": -165.3592151594037,
+  "pred_cue_after": -85.37110816074868,
+  "hint": false,
+  "pred_obj_path": [
+   [
+    1365.8483204389845,
+    641.0467932430553
+   ],
+   [
+    1357.8855257847908,
+    638.9665867327915
+   ]
+  ],
+  "pred_cue_after_path": [
+   [
+    1398.221126225458,
+    649.5038895612508
+   ],
+   [
+    1402.139822384897,
+    601.104389071935
+   ]
+  ],
+  "pred_scratch": false,
+  "obj_dir_actual": null,
+  "obj_moved": false,
+  "obj_on_table_end": false,
+  "obj_last_pocket_dist": 335.31368745280196,
+  "actual_pot": false,
+  "cue_after_actual": null,
+  "cue_on_table_end": false,
+  "err_obj_dir": null,
+  "err_cue_after": null
+ }
+]

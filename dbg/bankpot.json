@@ -1,0 +1,86 @@
+[
+ {
+  "shot": 2,
+  "bounces": 1,
+  "pred_pocket": [
+   961.0,
+   980.0
+  ],
+  "potted": false,
+  "obj_last": [
+   835.0,
+   887.0
+  ],
+  "obj_on_table": false,
+  "pred_path": [
+   [
+    1032.0,
+    879.0
+   ],
+   [
+    373.0,
+    910.0
+   ],
+   [
+    961.0,
+    980.0
+   ]
+  ]
+ },
+ {
+  "shot": 3,
+  "bounces": 1,
+  "pred_pocket": [
+   343.0,
+   346.0
+  ],
+  "potted": false,
+  "obj_last": [
+   520.0,
+   930.0
+  ],
+  "obj_on_table": true,
+  "pred_path": [
+   [
+    582.0,
+    648.0
+   ],
+   [
+    532.0,
+    952.0
+   ],
+   [
+    343.0,
+    346.0
+   ]
+  ]
+ },
+ {
+  "shot": 4,
+  "bounces": 1,
+  "pred_pocket": [
+   343.0,
+   346.0
+  ],
+  "potted": false,
+  "obj_last": [
+   689.0,
+   629.0
+  ],
+  "obj_on_table": true,
+  "pred_path": [
+   [
+    1059.0,
+    915.0
+   ],
+   [
+    1030.0,
+    953.0
+   ],
+   [
+    343.0,
+    346.0
+   ]
+  ]
+ }
+]

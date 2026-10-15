@@ -1,0 +1,51 @@
+{
+ "cal": {
+  "b": 0.06289513077121896,
+  "t": 0.06446118436320644,
+  "r": 0.08680056897314195,
+  "l": 0.08664965856635831
+ },
+ "cal_measured": [
+  "b",
+  "r"
+ ],
+ "r_ratio": 0.01323166063956083,
+ "region": null,
+ "show": {
+  "cue": true,
+  "obj": true,
+  "chain": true,
+  "after": true,
+  "rest": true,
+  "labels": true
+ },
+ "manual": {
+  "on": true,
+  "felt": [
+   352,
+   365,
+   1569,
+   966
+  ],
+  "r": 16.0,
+  "bounces": 3,
+  "cue": [
+   1266.673735725938,
+   785.8874388254486
+  ],
+  "real": true,
+  "guide": true,
+  "point": [
+   1181.0,
+   529.0
+  ]
+ },
+ "thick": 1.0,
+ "panel": {
+  "folded": false,
+  "pos": [
+   1642,
+   30
+  ]
+ }
+}
