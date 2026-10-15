@@ -102,6 +102,10 @@ def checklist():
 
 
 # ---------------------------------------------------------------- overlay
+import ossupport
+GUARD = None
+
+
 class Overlay(QtWidgets.QWidget):
     toggle = QtCore.pyqtSignal()
     snapshot = QtCore.pyqtSignal()
@@ -127,6 +131,8 @@ class Overlay(QtWidgets.QWidget):
         self.result.connect(self.on_result)
         self.pin.connect(self.pin_cue)
         self.gkey.connect(self.guide_key)
+        self._gtimer = QtCore.QTimer(self, timeout=self.update)   # re-check the window guard
+        self._gtimer.start(400)
         self.fast = QtCore.QTimer(self, timeout=self.manual_tick)
         self.fast.start(16)                   # manual line follows the mouse at ~60 fps
         threading.Thread(target=self.worker, daemon=True).start()
@@ -319,6 +325,8 @@ class Overlay(QtWidgets.QWidget):
 
     # ---- drawing
     def paintEvent(self, _):
+        if not (GUARD and GUARD.ok):           # only draw over the user's own game
+            return
         p = QtGui.QPainter(self)
         try:
             self.paint(p)
@@ -964,8 +972,10 @@ def main():
     log.info('started')
     load_config()
 
+    global GUARD
     app = QtWidgets.QApplication(sys.argv)
     app.setApplicationName('PoolSight')
+    GUARD = ossupport.Guard(own_titles=('PoolSight',))
     for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
         signal.signal(sig, lambda n, _: (log.info(f'got signal {n}, quitting'), app.quit()))
     mon = new_grabber().monitors[0]

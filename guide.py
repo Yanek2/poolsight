@@ -19,6 +19,10 @@ import time
 import numpy as np
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+import ossupport
+
+GUARD = None      # ossupport.Guard: lines/keys only work on the user's own game window
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 CONFIG = os.path.join(HERE, 'guide.json')
 log = logging.getLogger('guide')
@@ -140,8 +144,7 @@ def grabber():
     display connection each time until the X server refuses new clients.)"""
     g = getattr(_TL, 'sct', None)
     if g is None:
-        import mss
-        g = mss.MSS() if hasattr(mss, 'MSS') else mss.mss()
+        g = ossupport.Grabber()           # pixel-exact on Linux, Windows and Retina Macs
         _TL.sct = g
     return g
 
@@ -1007,6 +1010,10 @@ class Overlay(QtWidgets.QWidget):
 
     def tick(self):
         now = time.time()
+        ok = bool(GUARD and GUARD.ok)
+        if ok != getattr(self, '_guard_ok', None):   # show / clear the lines as focus changes
+            self._guard_ok = ok
+            self.update()
         if not getattr(self, 'scanner', None):     # one long-lived background scanner
             self.scanner = threading.Thread(target=self._scan_loop, daemon=True)
             self.scanner.start()
@@ -1048,6 +1055,12 @@ class Overlay(QtWidgets.QWidget):
         if not CFG['felt']:
             LIVE['learn_msg'] = 'auto-tune: mark the table first'
             return
+        if ossupport.SYSTEM != 'Linux':
+            LIVE['learn_msg'] = 'auto-tune is Linux only - tune by hand with the sliders'
+            return
+        if not (GUARD and GUARD.ok):
+            LIVE['learn_msg'] = f'auto-tune: only runs on your own game ({ossupport.GAME_TITLE})'
+            return
         LIVE['auto'] = True
         threading.Thread(target=self._autotune, args=(shots,), daemon=True).start()
 
@@ -1067,6 +1080,9 @@ class Overlay(QtWidgets.QWidget):
             while LIVE.get('auto') and done < shots:
                 LIVE['learn_msg'] = f'auto-tune: waiting for the table to settle ({done}/{shots})'
                 table_still()
+                if not GUARD.ok:
+                    LIVE['learn_msg'] = 'auto-tune: stopped - your game window is no longer in front'
+                    break
                 cue = find_cue(CFG['felt'], CFG['r'])
                 balls = detect_balls(CFG['felt'], CFG['r'])
                 if cue is None:
@@ -1191,6 +1207,8 @@ class Overlay(QtWidgets.QWidget):
         threading.Thread(target=work, daemon=True).start()
 
     def on_key(self, k):
+        if not (GUARD and GUARD.ok):
+            return
         if k == 30:
             if LIVE.get('auto'):
                 self.autotune()                       # 3 also stops auto-tune
@@ -1256,7 +1274,7 @@ class Overlay(QtWidgets.QWidget):
         self.update()
 
     def paintEvent(self, _):
-        if not CFG['on'] or not CFG['felt']:
+        if not CFG['on'] or not CFG['felt'] or not (GUARD and GUARD.ok):
             return
         p = QtGui.QPainter(self)
         try:
@@ -1806,7 +1824,6 @@ class Panel(QtWidgets.QWidget):
 # ---------------------------------------------------------------- keys
 def qt_key_to_x(e):
     """Name of the pressed key as X11 understands it ('' if unusable)."""
-    from Xlib import XK
     k = e.key()
     special = {QtCore.Qt.Key_Up: 'Up', QtCore.Qt.Key_Down: 'Down', QtCore.Qt.Key_Left: 'Left',
                QtCore.Qt.Key_Right: 'Right', QtCore.Qt.Key_Space: 'space', QtCore.Qt.Key_Tab: 'Tab',
@@ -1824,6 +1841,9 @@ def qt_key_to_x(e):
                  ';': 'semicolon', "'": 'apostrophe', ',': 'comma', '.': 'period', '/': 'slash',
                  '\\': 'backslash'}
         name = named.get(name, name)
+    if ossupport.SYSTEM != 'Linux':
+        return name
+    from Xlib import XK
     if XK.string_to_keysym(name):
         return name
     sym = e.nativeVirtualKey()             # media / mouse-side keys etc: keep the raw keysym
@@ -1833,6 +1853,18 @@ def qt_key_to_x(e):
 def hotkeys(app, ov, panel):
     """Global keys (X11). Bindings come from CFG['keys'] and are re-grabbed when changed.
     Guide keys are only taken while the guide is on; show/hide and quit always."""
+    if ossupport.SYSTEM != 'Linux':
+        def always(action):
+            if action == 'quit':
+                QtCore.QMetaObject.invokeMethod(app, 'quit', QtCore.Qt.QueuedConnection)
+            else:
+                QtCore.QMetaObject.invokeMethod(panel, 'toggle_slot', QtCore.Qt.QueuedConnection)
+        ossupport.pynput_hotkeys(lambda: dict(KEYS_DEFAULT, **CFG.get('keys', {})),
+                                 lambda: bool(CFG['on'] and CFG['felt']),
+                                 lambda: bool(LIVE.get('binding')),
+                                 always, ov.key.emit,
+                                 {'point': 1, 'line': 2, 'learn': 30, 'up': 3, 'down': 4})
+        return
     try:
         from Xlib import X, XK, display
         d = display.Display()
@@ -1902,10 +1934,20 @@ def main():
     logging.basicConfig(filename=os.path.join(HERE, 'guide.log'), level=logging.INFO,
                         format='%(asctime)s %(message)s')
     log.info('started')
+    global GUARD
     load()
+    if ossupport.SYSTEM == 'Windows':
+        import ctypes
+        try:
+            ctypes.windll.shcore.SetProcessDpiAwareness(2)
+        except Exception:
+            pass
     app = QtWidgets.QApplication(sys.argv)
+    GUARD = ossupport.Guard(own_titles=('PoolSight',))
     app.setApplicationName('PoolSight Guide')
-    for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
+    for sig in (signal.SIGTERM, signal.SIGINT, getattr(signal, 'SIGHUP', None)):
+        if sig is None:
+            continue
         signal.signal(sig, lambda n, _: app.quit())
     geo = app.primaryScreen().virtualGeometry()
     ov = Overlay(geo)

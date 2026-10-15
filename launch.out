@@ -1,0 +1,5 @@
+127.0.0.1 - - [15/Oct/2026 18:58:29] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [15/Oct/2026 18:58:29] "GET /guide-mode.js HTTP/1.1" 200 -
+Gtk-Message: 18:58:29.726: Failed to load module "colorreload-gtk-module"
+127.0.0.1 - - [15/Oct/2026 18:58:30] code 404, message File not found
+127.0.0.1 - - [15/Oct/2026 18:58:30] "GET /favicon.ico HTTP/1.1" 404 -

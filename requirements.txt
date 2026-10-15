@@ -1,0 +1,6 @@
+PyQt5>=5.15
+numpy>=1.24
+mss>=9
+opencv-python>=4.8
+pynput>=1.7; sys_platform != "linux"
+python-xlib>=0.33; sys_platform == "linux"
